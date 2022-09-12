@@ -1,0 +1,22 @@
+
+.bottom_button.data-v-70e7565a {
+	margin-top: 20rpx !important;
+	width: 95%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	margin: 0 auto;
+}
+.banner.data-v-70e7565a {
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	background-color: white;
+}
+.banner image.data-v-70e7565a {
+	width: 100vw;
+}
+

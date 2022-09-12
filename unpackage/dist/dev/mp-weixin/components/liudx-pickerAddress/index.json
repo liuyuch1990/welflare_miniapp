@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "u-popup": "/components/liudx-pickerAddress/u-popup"
+  }
+}

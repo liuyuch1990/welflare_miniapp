@@ -1,0 +1,17 @@
+
+.container.data-v-29209c68 {
+	margin-bottom: 100rpx;
+}
+.address-cell.data-v-29209c68 .van-cell {
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.address-info.data-v-29209c68 {
+	text-align: left;
+}
+.content-bottom.data-v-29209c68 button {
+	background: #FF6700 !important;
+	border: 0;
+}
+

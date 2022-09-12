@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "axios": "^0.24.0",
+    "js-md5": "^0.7.3",
+    "uni-request": "^1.0.2"
+  }
+}

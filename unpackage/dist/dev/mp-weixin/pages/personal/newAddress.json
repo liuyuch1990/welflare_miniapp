@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "地址内容",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "picker-address": "/components/liudx-pickerAddress/index"
+  }
+}
