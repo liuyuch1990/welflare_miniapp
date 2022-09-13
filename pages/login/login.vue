@@ -10,6 +10,8 @@
 				@change="handleChangeCom()" />
 			<van-field :value="giftCardNum" label="礼品卡号:" required left-icon="" placeholder="请输入礼品卡号"
 				@change="handleChangeCard()" />
+			<van-field :value="userDept" required placeholder="点击右侧图标选择体系" label="体系:" readonly
+					   border icon="location" @click-input="show = true" @click-icon="addressShow = true" />
 			<!-- <van-field :value="userPwd" label="密码:" required left-icon="" placeholder="请输入密码" border="false"
 				password="true" @change="handleChangePass()" /> -->
 		</van-cell-group>
@@ -22,7 +24,14 @@
 			<!-- <text class="register" @click="toRegister">暂无账号，去注册</text> -->
 		</view>
 		</van-cell-group>
-
+<!--		<van-popup v-model="show" position="bottom">-->
+			<van-picker
+					show-toolbar
+					:columns="deptList"
+					@cancel="show = false"
+					@confirm="selectDept"
+			/>
+<!--		</van-popup>-->
 		<div class="agreement">
 			<span>使用本程序意味着您同意</span>
 			<text @click="serviceTerms">《用户使用协议》</text>
@@ -41,6 +50,9 @@
 			return {
 				userPhone: '',
 				userCom: '',
+				show: true,
+				userDept: '',
+				deptList: ['1','2','3'],
 				giftCardNum: '',
 				//验证规则
 				rules: {
@@ -59,7 +71,35 @@
 				},
 			}
 		},
+		onShow() {
+			this.queryDeptList();
+		},
 		methods: {
+			queryDeptList() {
+				const params = {
+					"url": this.ssdapi.queryDept.url,
+					"contentType": this.ssdapi.queryDept.contentType,
+					payload: {
+						// userPhone: this.userPhone,
+						// userCom: this.userCom,
+						// userDept: this.userDept,
+						// giftCardNum: this.giftCardNum
+					}
+				}
+				this.request.getRequest(params).then((res) => {
+					if (res.resultCode == 20000) {
+						console.log(res.data)
+						// for(let key in res.data){
+						// 	this.deptList.push(key.departmentName)
+						// 	console.log(key.departmentName)
+						// }
+					}
+				});
+			},
+
+			selectDept(value, index) {
+				this.userDept = value
+			},
 			//验证
 			validate(key) {
 				let bool = true;
@@ -76,6 +116,9 @@
 				return bool;
 			},
 
+			handleChangeDept (){
+				this.show = true
+			},
 			//获取用户名的输入框
 			handleChange(e) {
 				this.userPhone = e.detail;

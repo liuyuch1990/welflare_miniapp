@@ -3,6 +3,10 @@ export const requestApi = {
 		url: '/goods/list',
 		contentType: 'application/json'
 	}, // 首页-商品列表
+	queryDept: {
+		url: '/dept/queryDeptList',
+		contentType: 'application/json'
+	}, // 商品详情
 	goodsDetail: {
 		url: '/goods/queryById/',
 		contentType: 'application/json'

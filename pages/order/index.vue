@@ -27,9 +27,9 @@
 						<view class="left_margin">收货地址：{{item.orderAddress}}</view>
 						<!-- 按钮 -->
 
-						
+
 						<view v-if="item.status==1" >
-						
+
 							<view v-for="logistic,logIndex in item.express" >
 								<view class="logistics_line">
 									<view class="left_margin">{{logistic.logisticsCompany}} : {{logistic.courierNumber}}</view>
@@ -39,15 +39,19 @@
 								<van-steps v-if="logIndex==activeLogis&&index==activeIndex" direction="vertical" active-color="#1E90FF" active="0" :steps="steps">
 						</van-steps>
 						</view>
-						
-						
+
+
 						</view>
-					
-					
-				
+
+
+
 						<view v-if="item.status==0" class="button_group">
 							<van-button style="padding-right:20rpx;" type="primary" size="small" plain @click="cancelOrder(item)">取消订单</van-button>
 							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="changeAddress(item)">修改地址</van-button>
+						</view>
+						<view v-if="item.status==1" class="button_group">
+							<van-button style="padding-right:20rpx;" type="primary" size="small" plain @click="rollBackOrder(item,3)">申请退货</van-button>
+							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="rollBackOrder(item,4)">申请换货</van-button>
 						</view>
 					</view>
 				</van-list>
@@ -58,9 +62,9 @@
 </template>
 
 <script>
-	
+
 	import {
-		userOrderList,cancelOrder,queryLogis
+		userOrderList,rollBackOrder,cancelOrder,queryLogis
 	} from '@/api/api.js';
 	import {
 		GoodsTypeVariable
@@ -71,7 +75,7 @@
 				activeLogis:-1,
 				activeIndex:-1,
 					steps:[],
-				tabList: ['全部','待发货','已发货','已取消'],
+				tabList: ['全部','待发货','已发货','已取消','待退货','待换货'],
 				activeTab:'',
 				orderList: [],
 				orderStatus: "未付款",
@@ -88,9 +92,9 @@
 			})
 		},
 		methods: {
-			
+
 			viewLogistics(item,logIndex,orderIndex){
-				
+
 				if(logIndex==this.activeLogis&&orderIndex==this.activeIndex){
 					//收起
 					this.activeLogis=-1
@@ -99,14 +103,14 @@
 					//展开当前
 					this.activeLogis=logIndex;
 					this.activeIndex=orderIndex;
-					
+
 					//获取物流信息
 					var params = {
 						"url": queryLogis.url+'?orderId='+item.express[logIndex].courierNumber,
 						"content-type": queryLogis.contentType,
 						payload: {
 							orderId:item.express[logIndex].courierNumber,
-					
+
 						}
 					}
 					this.steps=[]
@@ -119,18 +123,18 @@
 						this.steps.push(info)
 					})
 					})
-					
-					
-					
+
+
+
 				}
-				
+
 			},
 			changeAddress(item){
 				const param=JSON.stringify(item.orderId)
 				uni.navigateTo({
 					url:'./addressChange?param='+encodeURIComponent(JSON.stringify(param))
 				})
-				
+
 			},
 			cancelOrder(item){
 				let that=this;
@@ -163,14 +167,56 @@
 								})
 									that.getOrderList('');
 							})
-							
-							
-							
-							
+
+
+
+
 				        } else if (res.cancel) {
 				            // console.log('用户点击取消');
 				        }
 				    }
+				});
+			},
+			rollBackOrder(item, i){
+				let title = i == 3? '退货': '换货'
+				let that=this;
+				uni.showModal({
+					title: title,
+					content: '确定要'+ title + '吗？',
+					confirmText:'确认',
+					cancelText:'我再想想',
+					confirmColor:'#ff6700',
+					cancelColor:'#C0C0C0',
+					success: function (res) {
+						if (res.confirm) {
+							let params = {
+								"url": rollBackOrder.url,
+								"content-type": rollBackOrder.contentType,
+								payload: {
+									orderId: item.orderId,
+									status: i + ''
+									// endTime:'',
+								}
+							}
+							that.request.postRequest(params).then(res => {
+								uni.showToast({
+									title: '退换成功',
+									duration: 2000
+								});
+								that.$nextTick(() => {
+									// DOM 更新完毕
+									that.active = 0
+								})
+								that.getOrderList('');
+							})
+
+
+
+
+						} else if (res.cancel) {
+							// console.log('用户点击取消');
+						}
+					}
 				});
 			},
 			changeTab(e){
@@ -206,7 +252,7 @@
 						});
 					});
 					});
-						
+
 						console.log(this.orderList,'转换后')
 				})
 

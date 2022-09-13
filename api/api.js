@@ -12,9 +12,14 @@ export const editAddress = {
 	contentType: 'application/json',
 }; // 更改订单地址
 export const cancelOrder = {
-	url: '/order/cancelOrder/',
+url: '/order/cancelOrder/',
 	contentType: 'application/json',
 }; // 更改订单地址
+
+export const rollBackOrder = {
+	url: '/order/rollBackOrder',
+	contentType: 'application/json',
+}; // 退还活
 
 export const getProvince = {
 	url: '/addr/province',
