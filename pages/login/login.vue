@@ -11,7 +11,7 @@
 			<van-field :value="giftCardNum" label="礼品卡号:" required left-icon="" placeholder="请输入礼品卡号"
 				@change="handleChangeCard()" />
 			<van-field :value="userDept" required placeholder="点击右侧图标选择体系" label="体系:" readonly
-					   border icon="location" @click-input="show = true" @click-icon="addressShow = true" />
+					    @click-input="show = true" />
 			<!-- <van-field :value="userPwd" label="密码:" required left-icon="" placeholder="请输入密码" border="false"
 				password="true" @change="handleChangePass()" /> -->
 		</van-cell-group>
@@ -24,14 +24,14 @@
 			<!-- <text class="register" @click="toRegister">暂无账号，去注册</text> -->
 		</view>
 		</van-cell-group>
-<!--		<van-popup v-model="show" position="bottom">-->
-			<van-picker
+		<van-cell-group class="cell-group">
+			<van-picker v-if="show"
 					show-toolbar
 					:columns="deptList"
 					@cancel="show = false"
 					@confirm="selectDept"
 			/>
-<!--		</van-popup>-->
+		</van-cell-group>
 		<div class="agreement">
 			<span>使用本程序意味着您同意</span>
 			<text @click="serviceTerms">《用户使用协议》</text>
@@ -50,9 +50,9 @@
 			return {
 				userPhone: '',
 				userCom: '',
-				show: true,
+				show: false,
 				userDept: '',
-				deptList: ['1','2','3'],
+				deptList: [],
 				giftCardNum: '',
 				//验证规则
 				rules: {
@@ -87,18 +87,15 @@
 					}
 				}
 				this.request.getRequest(params).then((res) => {
-					if (res.resultCode == 20000) {
-						console.log(res.data)
-						// for(let key in res.data){
-						// 	this.deptList.push(key.departmentName)
-						// 	console.log(key.departmentName)
-						// }
-					}
+						res.forEach((item)=>{
+							this.deptList.push(item.departmentName)
+						})
 				});
 			},
 
-			selectDept(value, index) {
-				this.userDept = value
+			selectDept(value) {
+				this.userDept = value.detail.value
+				this.show = false
 			},
 			//验证
 			validate(key) {

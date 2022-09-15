@@ -17,8 +17,7 @@
 						</view>
 						<!-- 物流信息 -->
 						<view class="logistics">
-							<view class="left_margin">{{item.status==0?'待发货':item.status==1?'已发货':'已取消'}}</view>
-
+							<view class="left_margin">{{item.status==0?'待发货':item.status==1?'已发货':item.status==2?'已取消':item.status==3?'待退货':item.status==4?'待换货':item.status==5?'已退货':item.status==6?'已换货':''}}</view>
 
 							<view class="right_margin">共{{item.orderGoods.length}}件商品</view>
 
@@ -75,7 +74,7 @@
 				activeLogis:-1,
 				activeIndex:-1,
 					steps:[],
-				tabList: ['全部','待发货','已发货','已取消','待退货','待换货'],
+				tabList: ['全部','待发货','已发货','已取消','待退货','待换货','已退货','已换货'],
 				activeTab:'',
 				orderList: [],
 				orderStatus: "未付款",
