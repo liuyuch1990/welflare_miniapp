@@ -12,7 +12,7 @@ export const editAddress = {
 	contentType: 'application/json',
 }; // 更改订单地址
 export const cancelOrder = {
-url: '/order/cancelOrder/',
+	url: '/order/cancelOrder/',
 	contentType: 'application/json',
 }; // 更改订单地址
 
@@ -60,3 +60,4 @@ export const queryLogis = {
 	url: '/order/queryLogistics',
 	contentType: 'application/json',
 }; // 查询物流信息
+

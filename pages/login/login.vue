@@ -136,9 +136,9 @@
 					title: '加载中'
 				});
 				// if(this.userCom=='bfhc001'||this.userCom=='BFHC001'||this.userCom=='sevenstar'||this.userCom=='SEVENSTAR'){
-				// 	uni.setStorageSync('baseUrl', 'https://unicorncto.top')
+				// 	uni.setStorageSync('baseUrl', 'https://unicorncto.top') 
 				// }else if (this.userCom=='BFHCZB'||this.userCom=='bfhczb'){
-				// 	uni.setStorageSync('baseUrl', 'https://ft.unicorncto.top')
+					// uni.setStorageSync('baseUrl', 'https://ft.unicorncto.top')
 				// }else{
 					
 				// 	uni.showToast({
@@ -164,6 +164,7 @@
 					var result = res.data
 					uni.setStorageSync('token', result.map.token);
 					uni.setStorageSync('userInfo', result.user);
+					uni.setStorageSync('baseUrl', 'https://unicorncto.top/wsp-boot')
 					uni.showToast({
 						title: '登录成功,前往首页',
 						duration: 1000,

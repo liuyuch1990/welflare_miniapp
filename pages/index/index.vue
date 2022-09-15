@@ -7,27 +7,17 @@
 
 		<!-- 轮播图 -->
 		<swiper class="content-swipe" :indicator-dots="true" :autoplay="true" interval="5000" duration="500">
-			<swiper-item class="content-swipe-item">
-				<image src="@/static/swipeOne.png" mode=""></image>
-			</swiper-item>
-			<swiper-item class="content-swipe-item">
-				<image src="@/static/swipeTwo.png" mode=""></image>
-			</swiper-item>
-			<swiper-item class="content-swipe-item">
-				<image src="@/static/swipeThree.png" mode=""></image>
+			<swiper-item class="content-swipe-item" v-for="(item,index) in images" :key="index">
+				<image :src="item.imgPath" mode=""></image>
 			</swiper-item>
 		</swiper>
-		<van-notice-bar
-		  left-icon="volume-o"
-		  text="在代码阅读过程中人们说话的频率是衡量代码质量的唯一标准。"
-		/>
 		<!-- 轮播图END -->
 
 		<!-- tab内容 -->
 		<view class="content-tab">
 			<van-tabs v-model="active" :swipeable="true" :ellipsis="false" @change="tabChange">
-				<van-tab v-for="tabItem in tabList" :title="tabItem.value" :name="tabItem.key">
-					<van-grid :column-num="2" :gutter="6">
+				<van-tab v-for="tabItem in tabList" :title="tabItem.dictName" :name="tabItem.dictCode">
+					<van-grid :column-num="2" :gutter='8'>
 						<van-grid-item class='content-grid-item' use-slot v-for="(item,index) in goodsList"
 							:key="index">
 							<image @click="jumpDetail(item)" class="content-grid-item-img"
@@ -52,9 +42,6 @@
 </template>
 
 <script>
-	import {
-		GoodsTypeVariable
-	} from "@/utils/Variable";
 	export default {
 		data() {
 			return {
@@ -63,7 +50,9 @@
 					pageSize: 30,
 
 				},
-				baseUrl: 'https://unicorncto.top/wsp-boot',
+				images: [],
+				titleTips:'',
+				baseUrl: uni.getStorageSync('baseUrl'),
 				active: "全部",
 				tabList: [], //商品的分类
 				goodsList: [], //商品的列表
@@ -73,79 +62,72 @@
 			// this.baseUrl=uni.getStorageSync('baseUrl') +'/wsp-boot';
 			// 为了显示tabList,只有onload时循环列表里的分类，存进tabList中
 			// 如果在onshow里调用-带商品分类查询时tablist会不准确-缺失---待优化
-			this.getList().then(res => {
-				this.getTabList()
-			})
+			// this.getList().then(res => {})
+			this.getConfig()
 		},
 		onShow() { //每次切换页面调用
 			this.getList()
+			this.getTabList()
 		},
 		methods: {
+			getConfig() {
+				const params = {
+					"url": this.ssdapi.getConfigInfo.url,
+					"content-type": this.ssdapi.getConfigInfo.contentType,
+				}
+				this.request.getRequest(params).then((res) => {
+					this.titleTips = res.indexText
+					var i = 0;
+					for (const key in res) {
+						i = i + 1;
+						console.log(key);
+						if (res["indexPic" + i]) {
+							this.images.push({
+								imgPath: res["indexPic" + i],
+								id: i,
+							});
+						}
+					}
+				});
+			},
 			// 切换tabbar
 			tabChange(event) {
 				// 全部tab时删除goodsType查询条件
-				if (event.detail.name != '全部') {
-					this.queryParams.goodsType = event.detail.name
+				console.log(event)
+				if (event.detail.title == "全部") {
+					delete this.queryParams.goodsType;
 				} else {
-					delete this.queryParams.goodsType
+					this.queryParams.goodsType = event.detail.name;
 				}
 				this.getList()
 			},
 			//获得商品列表
 			getList() {
-				return new Promise((resolve, reject) => {
-					const params = {
-						"url": this.ssdapi.goodsList.url,
-						"content-type": this.ssdapi.goodsList.contentType,
-						payload: this.queryParams
-					}
-					this.request.postRequest(params).then(res => {
-						console.log("---",res)
-						this.goodsList = res.rows;
-						
-						this.goodsList.forEach((v) => {
-							GoodsTypeVariable.forEach((k) => {
-								if (v.goodsType == k.goodsType) {
-									v.typeName = k.typeName;
-								}
-							});
-						});
-						
-						resolve(this.goodsList)
-					}).catch(err => {
-						reject(err)
-					})
-				})
+				const params = {
+					"url": this.ssdapi.goodsList.url,
+					"content-type": this.ssdapi.goodsList.contentType,
+					payload: this.queryParams
+				}
+				this.request.postRequest(params).then(res => {
+					this.goodsList = res.rows;
 
+				})
 			},
 
 			//获得tabList
 			getTabList() {
-				// 根据前台本地维护商品种类名字
-				this.tabList = [{
-					key: '全部',
-					value: '全部'
-				}]
-				this.goodsList.forEach((v) => {
-					GoodsTypeVariable.forEach((k) => {
-						if (v.goodsType == k.goodsType) {
-							v.typeName = k.typeName;
-							const check = this.tabList.every((j) => {
-								if (j.key !== k.goodsType) {
-									return true;
-								} else {
-									return false;
-								}
-							});
-							if (check) {
-								this.tabList.push({
-									key: k.goodsType,
-									value: k.typeName,
-								});
-							}
-						console.log(v.typeName)
-						}
-					});
+				this.tabList = [];
+				const params = {
+					"url": this.ssdapi.queryTab.url,
+					"content-type": this.ssdapi.queryTab.contentType,
+				}
+				this.request.getRequest(params).then(res => {
+					this.tabList = [{
+						dictCode: "all",
+						dictName: "全部"
+					}];
+
+					this.tabList.push(...res);
 				});
 			},
 			// 查看详情

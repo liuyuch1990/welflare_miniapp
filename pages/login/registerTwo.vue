@@ -2,7 +2,7 @@
 
 	<view>
 		<view class="banner">
-			<!-- <image src='../../static/bg_test.jpg'></image> -->
+			<image src='../../static/bg_test.jpg'></image>
 		</view>
 		<van-cell-group>
 			<van-field :value="userPhone" label="手机号码" left-icon="" required :rules="telRules" placeholder="请输入手机号"

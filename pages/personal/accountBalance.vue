@@ -4,7 +4,7 @@
 
 			<van-cell-group title="账户余额">
 				<van-field :value="userInfo.userName" readonly label="姓名:" border />
-				<van-field :value="userInfo.userNo" readonly label="工号:" border />
+				<!-- <van-field :value="userInfo.cardNo" readonly label="工号:" border /> -->
 				<van-field :value="userInfo.userCom" readonly label="公司名称:" border />
 				<van-field :value="balance" readonly type="textarea" autosize label="账户余额:" border></van-field>
 			</van-cell-group>
@@ -32,16 +32,10 @@
 		queryCard,
 		chargeCard
 	} from '@/api/api.js';
-	import {
-		GoodsTypeVariable
-	} from "@/utils/Variable";
 	export default {
 		data() {
 			return {
 				userInfo: {
-					name: '爱美丽',
-					workNo: '006545',
-					com: '银河集团有限公司',
 				},
 				cardNo: '',
 				click: true,
@@ -63,8 +57,6 @@
 		methods: {
 			getUserInfo() {
 				this.userInfo = uni.getStorageSync('userInfo');
-				console.log(this.userInfo)
-
 			},
 			getBalance() {
 				var params = {
@@ -72,39 +64,17 @@
 					"content-type": queryCard.contentType,
 				}
 				this.request.getRequest(params).then(res => {
-					if (res.length == 0) {
+					if (!res ) {
 						return this.balance = '-'
 					} else {
-						//给balance赋值
-						var item = res[0]
-						var giftCardNum = item.giftCardNum;
-						var giftCardName = item.giftCardName;
-						var validDate = item.validDate;
-						var isTure = item.isTrue;
-						var isUse = item.isUse;
-						var cateOne = item.quotaA == null || item.quotaA == 0 ? '' : this.convertType('quotaA') +
-							'：' + item.quotaA + '件；';
-						var cateTwo = item.quotaB == null || item.quotaA == 0 ? '' : this.convertType('quotaB') +
-							'：' + item.quotaB + '件；';
-						// var cateThree = item.quotaC == null || item.quotaC == 0 ? '' : this.convertType('quotaC') +
-						// 	'：' + item.quotaC + '件。';
-						this.balance =
-							`${giftCardName}，有效期至${validDate}，请尽快进行兑换，以免过期失效，说明，您的每份礼品卡可以从以下礼品中选择任意一类进行兑换：${cateOne}${cateTwo}`
-						// this.balance = giftCardName + '1份，有效期至 包含:' + cateOne + cateTwo + cateThree + cateFour +
-						// 	cateFive + " 有效期至" + validDate;
-
+						var walletTips = "";
+						res.typeQuotaVoList.forEach((v) => {
+							walletTips += v.goodsTypeName + "：" + v.typeQuota + "件；";
+						});
+						this.balance = `${res.cardTypeName}，有效期至${res.validDate},说明，您的每份礼品卡可以从以下礼品中选择进行兑换：请尽快进行兑换，以免过期失效，${walletTips}`;
 					}
 
 				})
-			},
-			convertType(item) {
-				var result
-				GoodsTypeVariable.forEach((k) => {
-					if (item == k.key) {
-						return result = k.typeName
-					}
-				});
-				return result;
 			},
 			charge() {
 				var params = {

@@ -42,5 +42,13 @@ export const requestApi = {
 	checkOrder: {
 		url:'/order/createOrderCheck',
 		contentType:'application/json',
-	} // 下单校验
+	} ,// 下单校验
+	queryTab: {
+		url: '/com/queryGoodsTypeDropDownList',
+		contentType: 'application/json',
+	} ,//  查询公司所有分类
+	getConfigInfo: {
+		url: '/index/page/queryIndexPageInfo',
+		contentType: 'application/json',
+	} ,// 查询轮播图
 }

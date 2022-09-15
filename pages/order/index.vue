@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<van-tabs v-model="active" @click="changeTab" sticky="true">
-			<van-tab v-for="(tab,tabIndex) in tabList" :title=tab  :key="tabIndex" :name='tab'>
-				<van-list v-model="loading"  :finished="finished" finished-text="没有更多了" @load="onLoad">
+			<van-tab v-for="(tab,tabIndex) in tabList" :title=tab :key="tabIndex" :name='tab'>
+				<van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
 					<!-- 订单卡片 -->
 					<view v-for="item,index in orderList" :key="index" class="order">
 						<view class="header">
@@ -11,8 +11,8 @@
 						</view>
 						<!-- 商品列表 -->
 						<view class="good_list" v-for="good in item.orderGoods" :key=index>
-							<van-card :num=good.goodsNum  :desc=good.typeName :title=good.goodsName
-								:thumb="baseUrl+'/wsp-boot'+good.picSavepath" />
+							<van-card :num=good.goodsNum :desc=good.typeName :title=good.goodsName
+								:thumb="baseUrl+good.picSavepath" />
 
 						</view>
 						<!-- 物流信息 -->
@@ -27,17 +27,22 @@
 						<!-- 按钮 -->
 
 
-						<view v-if="item.status==1" >
+						<view v-if="item.status==1">
 
-							<view v-for="logistic,logIndex in item.express" >
+							<view v-for="logistic,logIndex in item.express">
 								<view class="logistics_line">
-									<view class="left_margin">{{logistic.logisticsCompany}} : {{logistic.courierNumber}}</view>
-									<van-button v-if="logIndex==activeLogis&&index==activeIndex" class="right_margin" style="padding-right:20rpx;" type="primary" size="small" @click="viewLogistics(item,logIndex,index)">收起物流信息</van-button>
-									<van-button v-else class="right_margin" style="padding-right:20rpx;" type="primary" size="small" @click="viewLogistics(item,logIndex,index)">展开物流信息</van-button>
+									<view class="left_margin">{{logistic.logisticsCompany}} : {{logistic.courierNumber}}
+									</view>
+									<van-button v-if="logIndex==activeLogis&&index==activeIndex" class="right_margin"
+										style="padding-right:20rpx;" type="primary" size="small"
+										@click="viewLogistics(item,logIndex,index)">收起物流信息</van-button>
+									<van-button v-else class="right_margin" style="padding-right:20rpx;" type="primary"
+										size="small" @click="viewLogistics(item,logIndex,index)">展开物流信息</van-button>
 								</view>
-								<van-steps v-if="logIndex==activeLogis&&index==activeIndex" direction="vertical" active-color="#1E90FF" active="0" :steps="steps">
-						</van-steps>
-						</view>
+								<van-steps v-if="logIndex==activeLogis&&index==activeIndex" direction="vertical"
+									active-color="#1E90FF" active="0" :steps="steps">
+								</van-steps>
+							</view>
 
 
 						</view>
@@ -61,13 +66,9 @@
 </template>
 
 <script>
-
 	import {
 		userOrderList,rollBackOrder,cancelOrder,queryLogis
 	} from '@/api/api.js';
-	import {
-		GoodsTypeVariable
-	} from "@/utils/Variable";
 	export default {
 		data() {
 			return {
@@ -78,8 +79,8 @@
 				activeTab:'',
 				orderList: [],
 				orderStatus: "未付款",
-				status:'',
-				baseUrl:uni.getStorageSync('baseUrl'),
+				status: '',
+				baseUrl: uni.getStorageSync('baseUrl'),
 			}
 		},
 		onShow() {
@@ -92,35 +93,35 @@
 		},
 		methods: {
 
-			viewLogistics(item,logIndex,orderIndex){
+			viewLogistics(item, logIndex, orderIndex) {
 
-				if(logIndex==this.activeLogis&&orderIndex==this.activeIndex){
+				if (logIndex == this.activeLogis && orderIndex == this.activeIndex) {
 					//收起
-					this.activeLogis=-1
-					this.activeIndex=-1;
-				}else{
+					this.activeLogis = -1
+					this.activeIndex = -1;
+				} else {
 					//展开当前
-					this.activeLogis=logIndex;
-					this.activeIndex=orderIndex;
+					this.activeLogis = logIndex;
+					this.activeIndex = orderIndex;
 
 					//获取物流信息
 					var params = {
-						"url": queryLogis.url+'?orderId='+item.express[logIndex].courierNumber,
+						"url": queryLogis.url + '?orderId=' + item.express[logIndex].courierNumber,
 						"content-type": queryLogis.contentType,
 						payload: {
-							orderId:item.express[logIndex].courierNumber,
+							orderId: item.express[logIndex].courierNumber,
 
 						}
 					}
-					this.steps=[]
+					this.steps = []
 					this.request.getRequest(params).then(res => {
-					var infos=JSON.parse(res)
-					infos.forEach(item=>{
-						var info={};
-						info.desc=item.context;
-						info.text=item.ftime
-						this.steps.push(info)
-					})
+						var infos = JSON.parse(res)
+						infos.forEach(item => {
+							var info = {};
+							info.desc = item.context;
+							info.text = item.ftime
+							this.steps.push(info)
+						})
 					})
 
 
@@ -128,32 +129,27 @@
 				}
 
 			},
-			changeAddress(item){
-				const param=JSON.stringify(item.orderId)
+			changeAddress(item) {
+				const param = JSON.stringify(item.orderId)
 				uni.navigateTo({
-					url:'./addressChange?param='+encodeURIComponent(JSON.stringify(param))
+					url: './addressChange?param=' + encodeURIComponent(JSON.stringify(param))
 				})
 
 			},
-			cancelOrder(item){
-				let that=this;
+			cancelOrder(item) {
+				let that = this;
 				uni.showModal({
-				    title: '取消订单',
-				    content: '订单取消后无法恢复，确定要取消吗？',
-					confirmText:'确认取消',
-					cancelText:'我再想想',
-					confirmColor:'#ff6700',
-					cancelColor:'#C0C0C0',
-				    success: function (res) {
-				        if (res.confirm) {
+					title: '取消订单',
+					content: '订单取消后无法恢复，确定要取消吗？',
+					confirmText: '确认取消',
+					cancelText: '我再想想',
+					confirmColor: '#ff6700',
+					cancelColor: '#C0C0C0',
+				 success: function(res) {
+						if (res.confirm) {
 							var params = {
-								"url": cancelOrder.url+item.orderId,
+								"url": cancelOrder.url + item.orderId,
 								"content-type": cancelOrder.contentType,
-								// payload: {
-								// 	// orderNumber:'',
-								// 	// startTime:'',
-								// 	// endTime:'',
-								// }
 							}
 							that.request.getRequest(params).then(res => {
 								uni.showToast({
@@ -208,22 +204,16 @@
 								})
 								that.getOrderList('');
 							})
-
-
-
-
-						} else if (res.cancel) {
-							// console.log('用户点击取消');
 						}
 					}
 				});
 			},
-			changeTab(e){
-				this.status=e.target.index;
-				if(this.status==0){
+			changeTab(e) {
+				this.status = e.target.index;
+				if (this.status == 0) {
 					this.getOrderList('');
-				}else{
-					this.getOrderList(this.status-1);
+				} else {
+					this.getOrderList(this.status - 1);
 				}
 			},
 			getOrderList(status) {
@@ -231,28 +221,14 @@
 					"url": userOrderList.url,
 					"content-type": userOrderList.contentType,
 					payload: {
-						// orderNumber:'',
-						// startTime:'',
-						// endTime:'',
-						status:status,
+						status: status,
 						pageSize: 200,
 						pageNum: 1
-
 					}
 				}
 				this.request.postRequest(params).then(res => {
-					this.orderList=res;
-					this.orderList.forEach((item) => {
-					item.orderGoods.forEach((v) => {
-						GoodsTypeVariable.forEach((k) => {
-							if (v.goodsType == k.goodsType) {
-								v.typeName = k.typeName;
-							}
-						});
-					});
-					});
-
-						console.log(this.orderList,'转换后')
+					this.orderList = res;
+					this.orderList.forEach((item) => {});
 				})
 
 
@@ -305,12 +281,14 @@
 		padding-top: 20rpx;
 
 	}
-	.logistics_line{
-			display: flex;
+
+	.logistics_line {
+		display: flex;
 		justify-content: space-between;
 		padding-top: 10rpx;
 	}
-	.logistics_group{
+
+	.logistics_group {
 		padding-top: 20rpx;
 		padding-bottom: 20rpx;
 	}

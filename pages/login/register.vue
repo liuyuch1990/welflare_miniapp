@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="banner">
-			<!-- <image src='../../static/bg_test.jpg'></image> -->
+			<image src='../../static/bg_test.jpg'></image>
 			
 		</view>
 		<van-cell-group >

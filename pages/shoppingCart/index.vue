@@ -16,7 +16,7 @@
 							  @click="onOpen(item)"
 							>
 							  <van-cell-group>
-							    <van-card :title="item.info.goodsName" :thumb="baseUrl+'/wsp-boot'+item.info.coverPath">
+							    <van-card :title="item.info.goodsName" :thumb="baseUrl+item.info.coverPath">
 							    	<view class="desc_class multi-ellipsis--l2" slot="desc">{{item.info.goodsContent}}
 							    	</view>
 							    </van-card>
@@ -35,7 +35,7 @@
 		</scroll-view>
 		<!-- 底部操作按钮 -->
 		<view class="content-bottom">
-			<van-submit-bar :price="length*100" currency="共" decimal-length="0" suffix-label="件商品" :disabled="length<=0"
+			<van-submit-bar :price="length*100" currency="共" decimal-length="0" suffix-label="种商品" :disabled="length<=0"
 				button-text="下一步" safe-area-inset-bottom='true' @submit="nextButton">
 				<van-checkbox :value="ischecked" @change="onCheckboxChange"></van-checkbox>
 			</van-submit-bar>
@@ -45,9 +45,6 @@
 </template>
 
 <script>
-	import {
-		GoodsTypeVariable
-	} from "@/utils/Variable";
 	var _self;
 	export default {
 		data() {

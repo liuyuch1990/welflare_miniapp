@@ -49,7 +49,7 @@
 				typeName: "", //分类名
 				goodsNum: 1, // 商品数量
 				shopCartData: [], //购物车信息
-				baseUrl: 'https://unicorncto.top/wsp-boot',
+				baseUrl:uni.getStorageSync('baseUrl'),
 			}
 		},
 		onLoad(options) {

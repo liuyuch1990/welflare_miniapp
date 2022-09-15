@@ -20,7 +20,7 @@
 		<van-cell-group v-for="(item,index) in goodsList">
 			<van-cell :title="item.goodsName">
 				<van-tag type="info">{{item.goodsName}}</van-tag>
-				<van-card :desc="item.info.goodsContent" :title="item.info.goodsName" :thumb="baseUrl+'/wsp-boot'+item.info.coverPath"
+				<van-card :desc="item.info.goodsContent" :title="item.info.goodsName" :thumb="baseUrl+item.info.coverPath"
 					:num="item.info.goodsNum">
 				</van-card>
 			</van-cell>
@@ -29,7 +29,7 @@
 
 		<!-- 去下单 -->
 		<view class="content-bottom">
-			<van-submit-bar :loading="submitLoading" :price="length*100" currency="共" decimal-length="0" suffix-label="件商品" button-text="下单"
+			<van-submit-bar :loading="submitLoading" :price="length*100" currency="共" decimal-length="0" suffix-label="种商品" button-text="下单"
 				safe-area-inset-bottom='true' @submit="onSubmit" >
 			</van-submit-bar>
 		</view>
@@ -38,9 +38,6 @@
 </template>
 
 <script>
-	import {
-		GoodsTypeVariable
-	} from "@/utils/Variable";
 	var _self;
 	export default {
 		data() {

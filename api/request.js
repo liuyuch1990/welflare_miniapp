@@ -17,9 +17,7 @@ const request = {
 				data: param.payload,
 				success: res => {
 					if (res.data.resultCode == 20000) {
-						console.log(res, 'res')
 						const data = res.data.data;
-						console.log(res.header.token, !res.header.token)
 						if (!res.header.token) {
 							uni.showToast({
 								title: "服务器异常，请稍后再试！",
@@ -122,7 +120,6 @@ const request = {
 								icon: "none"
 							})
 						} else {
-							console.log(222)
 							const data = res.data;
 							resolve(data)
 						}
@@ -155,7 +152,6 @@ const request = {
 						resolve(data)
 					} else {
 						reject(data)
-						console.log("reject", res)
 					}
 				},
 				fail: (err) => {
