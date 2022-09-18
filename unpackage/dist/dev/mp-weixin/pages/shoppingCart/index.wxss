@@ -8,12 +8,8 @@
 	color: #808080;
 }
 .goods.data-v-710d7764 {
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-align: center;
-	-webkit-align-items: center;
-	        align-items: center;
+	align-items: center;
 	padding: 20rpx;
 }
 .stepper.data-v-710d7764 {

@@ -11,6 +11,10 @@ export const editAddress = {
 	url: '/order/edit',
 	contentType: 'application/json',
 }; // 更改订单地址
+export const orderUpload = {
+	url: '/order/upload',
+	contentType: 'application/json',
+}; // 更改订单地址
 export const cancelOrder = {
 	url: '/order/cancelOrder/',
 	contentType: 'application/json',
@@ -20,7 +24,14 @@ export const rollBackOrder = {
 	url: '/order/rollBackOrder',
 	contentType: 'application/json',
 }; // 退还活
-
+export const addCommentOrReturnReason = {
+	url: '/order/addCommentOrReturnReason',
+	contentType: 'application/json',
+}; // 退还活
+export const uploadRollImage = {
+	url: '/order/upload',
+	contentType: 'application/json',
+}; // 退还活
 export const getProvince = {
 	url: '/addr/province',
 	contentType: 'application/json',

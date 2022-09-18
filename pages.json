@@ -27,6 +27,20 @@
 				"enablePullDownRefresh": false
 			}
 
+		},{
+			"path": "pages/order/addComment",
+			"style": {
+				"navigationBarTitleText": "评价",
+				"enablePullDownRefresh": false
+			}
+
+		},{
+			"path": "pages/order/rollOrder",
+			"style": {
+				"navigationBarTitleText": "评价",
+				"enablePullDownRefresh": false
+			}
+
 		}, {
 			"path": "pages/order/addressChange",
 			"style": {
@@ -215,6 +229,7 @@
 			"van-collapse": "/wxcomponents/vant/collapse/index",
 			"van-collapse-item": "/wxcomponents/vant/collapse-item/index",
 			"van-picker": "/wxcomponents/vant/picker/index",
+			"van-uploader": "/wxcomponents/vant/uploader/index",
 			"van-grid": "/wxcomponents/vant/grid/index",
 			"van-grid-item": "/wxcomponents/vant/grid-item/index",
 			"van-toast": "/wxcomponents/vant/toast/index"

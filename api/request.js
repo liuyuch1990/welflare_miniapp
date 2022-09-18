@@ -1,7 +1,7 @@
 // var baseUrl = "https://gamebeta.m.jd.com";
 // var baseUrl = "http://test1.esign.jd.com";
-// var baseUrl = "https://unicorncto.top"; // 正式环境
-var baseUrl = "http://localhost:9209"; //测试环境
+var baseUrl = "https://unicorncto.top"; // 正式环境
+// var baseUrl = "http://localhost:9209"; //测试环境
 // var token = uni.getStorageSync('token');
 
 const request = {

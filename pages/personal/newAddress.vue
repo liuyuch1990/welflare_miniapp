@@ -6,6 +6,10 @@
 					@change="nameChange()" />
 				<van-field :value="addressItem.receiverPhone" required placeholder="请输入收货人手机号" label="手机号:" border
 					@change="phoneChange()" />
+				<van-field :value="addressItem.userNo" required placeholder="请输入员工号" label="员工号:" border
+					@change="userNoChange()" />
+				<van-field :value="addressItem.userName" required placeholder="请输入员工姓名" label="员工姓名:" border
+					@change="userNameChange()" />
 				<van-field :value="addressItem.areaName" required placeholder="点击右侧图标选择省市区" label="所在地区:" readonly
 					border icon="location" @click-input="addressShow = true" @click-icon="addressShow = true" />
 				<van-field :value="addressItem.addrContent" required type="textarea" autosize placeholder="例:1号楼209室"
@@ -102,6 +106,14 @@
 				this.addressItem.receiverPhone = e.detail;
 				this.validateForm()
 			},
+			userNoChange(e) {
+				this.addressItem.userNo = e.detail;
+				this.validateForm()
+			},
+			userNameChange(e) {
+				this.addressItem.userName = e.detail;
+				this.validateForm()
+			},
 			contentChange(e) {
 				this.addressItem.addrContent = e.detail;
 				this.validateForm()
@@ -181,10 +193,9 @@
 			},
 			validateForm() {
 				if (this.addressItem.receiverName  && this.addressItem.receiverPhone && this.addressItem
-					.areaName && this.addressItem.addrContent) {
+					.areaName && this.addressItem.addrContent && this.addressItem.userNo && this.addressItem.userName) {
 					this.click = false;
 				}
-
 			},
 
 

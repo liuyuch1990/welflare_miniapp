@@ -55,7 +55,13 @@
 						</view>
 						<view v-if="item.status==1" class="button_group">
 							<van-button style="padding-right:20rpx;" type="primary" size="small" plain @click="rollBackOrder(item,3)">申请退货</van-button>
-							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="rollBackOrder(item,4)">申请换货</van-button>
+							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="navigateToRoll(item, 4)">申请换货</van-button>
+							<view v-if="item.stars == null">
+							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="addComment(item)">确认收货</van-button>
+							</view>
+							<view v-if="item.stars != null">
+								<van-button style="padding-right:20rpx;" size="small" type="primary" @click="addComment(item)">修改评价</van-button>
+							</view>
 						</view>
 					</view>
 				</van-list>
@@ -77,18 +83,22 @@
 					steps:[],
 				tabList: ['全部','待发货','已发货','已取消','待退货','待换货','已退货','已换货'],
 				activeTab:'',
+				active: 0,
 				orderList: [],
 				orderStatus: "未付款",
 				status: '',
 				baseUrl: uni.getStorageSync('baseUrl'),
 			}
 		},
+		// onLoad(option){
+		// 	this.status=option.status;
+		// },
 		onShow() {
 			this.getOrderList(this.status)
 			this.$nextTick(() => {
 				// DOM 更新完毕
 				// this.active = 0
-				this.active = "待发货"
+				this.active = this.status - 1
 			})
 		},
 		methods: {
@@ -208,8 +218,19 @@
 					}
 				});
 			},
+			addComment(item){
+				uni.navigateTo({
+					url: '/pages/order/addComment?id=' + item.orderId + "&comment=" +item.comment + '&stars=' + item.stars
+				})
+			},
+			navigateToRoll(item, i) {
+				uni.navigateTo({
+					url: '/pages/order/rollOrder?id=' + item.orderId + "&i=" + i + "&rollReason=" + item.rollReason + '&appointment=' + item.appointment + '&rollPics=' + item.rollPics
+				})
+			},
 			changeTab(e) {
 				this.status = e.target.index;
+				this.active = e.target.index;
 				if (this.status == 0) {
 					this.getOrderList('');
 				} else {

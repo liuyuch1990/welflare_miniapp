@@ -68,6 +68,10 @@
 						rule: /^1[3456789]\d{9}$/,
 						msg: "手机号格式错误"
 					},
+					userDept: {
+						rule: /\S/,
+						msg: "公司码不能为空"
+					},
 				},
 			}
 		},
@@ -132,6 +136,7 @@
 				if (!this.validate('userPhone')) return;
 				if (!this.validate("userCom")) return;
 				if (!this.validate("giftCardNum")) return;
+				if (!this.validate("userDept")) return;
 				uni.showLoading({
 					title: '加载中'
 				});
@@ -156,6 +161,7 @@
 					payload: {
 						userPhone: this.userPhone,
 						userCom: this.userCom,
+						userDept: this.userDept,
 						giftCardNum: this.giftCardNum
 					}
 				}

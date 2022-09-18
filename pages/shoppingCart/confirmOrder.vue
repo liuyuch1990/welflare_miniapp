@@ -113,7 +113,9 @@
 					"content-type": this.ssdapi.createOrder.contentType,
 					payload: {
 						orderName: this.addressInfo.receiverName,
-						orderTel: this.addressInfo.receiverPhone,
+						orderTel:  this.addressInfo.receiverPhone,
+						userNo: this.addressInfo.userNo,
+						userName: this.addressInfo.userName,
 						orderAddress: this.addressInfo.areaName + this.addressInfo.addrContent,
 						orderGoodsJson: this.goodsAddOrders,
 					}

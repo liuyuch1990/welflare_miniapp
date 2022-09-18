@@ -1,12 +1,8 @@
 
 .header.data-v-00563306 {
 	padding-top: 20rpx;
-	display: -webkit-box;
-	display: -webkit-flex;
 	display: flex;
-	-webkit-box-pack: justify;
-	-webkit-justify-content: space-between;
-	        justify-content: space-between;
+	justify-content: space-between;
 }
 .left_margin.data-v-00563306 {
 	padding-left: 20rpx;

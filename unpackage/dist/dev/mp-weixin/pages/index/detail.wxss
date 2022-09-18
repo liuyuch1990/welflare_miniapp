@@ -30,17 +30,11 @@
 }
 .goods-num-view.data-v-5166ee27 {
 		font-size: 18px;
-		display: -webkit-box;
-		display: -webkit-flex;
 		display: flex;
-		-webkit-box-pack: justify;
-		-webkit-justify-content: space-between;
-		        justify-content: space-between;
+		justify-content: space-between;
 }
 .detail-bottom-btns.data-v-5166ee27 {
 		width: 100%;
-		display: -webkit-box;
-		display: -webkit-flex;
 		display: flex;
 		position: fixed;
 		bottom: 0;
