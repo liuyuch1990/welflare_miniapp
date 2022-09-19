@@ -77,9 +77,8 @@
 		onLoad(option){
 			this.orderId=option.id;
 			this.i=option.i;
-			this.appointment=option.appointment;
-			this.rollReason=option.rollReason;
-			this.previewList=option.id;
+			this.appointment= option.appointment == 'null' ? '':option.appointment;
+			this.rollReason= option.rollReason == 'null' ? '':option.rollReason;
 		},
 		methods: {
 			previewImg(e) {
@@ -97,7 +96,7 @@
 				uni.uploadFile({
 					header: {
 						"token": uni.getStorageSync('token') },
-					url: orderUpload.url, //仅为示例，非真实的接口地址
+					url: "https://unicorncto.top/wsp-boot" + orderUpload.url, //仅为示例，非真实的接口地址
 					filePath: this.previewList[0].url,
 					name: 'file',
 					formData: {

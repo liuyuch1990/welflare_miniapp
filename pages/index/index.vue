@@ -12,6 +12,11 @@
 			</swiper-item>
 		</swiper>
 		<!-- 轮播图END -->
+		
+		<van-notice-bar
+		  left-icon="volume-o"
+		  :text="titleTips"
+		/>
 
 		<!-- tab内容 -->
 		<view class="content-tab">

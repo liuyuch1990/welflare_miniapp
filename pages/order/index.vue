@@ -54,7 +54,7 @@
 							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="changeAddress(item)">修改地址</van-button>
 						</view>
 						<view v-if="item.status==1" class="button_group">
-							<van-button style="padding-right:20rpx;" type="primary" size="small" plain @click="rollBackOrder(item,3)">申请退货</van-button>
+							<van-button style="padding-right:20rpx;" type="primary" size="small" plain @click="navigateToRoll(item,3)">申请退货</van-button>
 							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="navigateToRoll(item, 4)">申请换货</van-button>
 							<view v-if="item.stars == null">
 							<van-button style="padding-right:20rpx;" size="small" type="primary" @click="addComment(item)">确认收货</van-button>
