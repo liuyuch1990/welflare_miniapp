@@ -19,10 +19,10 @@ const request = {
 					if (res.data.resultCode == 20000) {
 						const data = res.data.data;
 						if (!res.header.token) {
-							uni.showToast({
-								title: "服务器异常，请稍后再试！",
-								icon:'none'
-							})
+							// uni.showToast({
+							// 	title: "服务器异常，请稍后再试！",
+							// 	icon:'none'
+							// })
 						} else {
 							uni.setStorageSync('token', res.header.token);
 						}
@@ -69,10 +69,10 @@ const request = {
 						const data = res.data.data;
 
 						if (!res.header.token) {
-							uni.showToast({
-								title: "服务器异常，请稍后再试！",
-								icon:'none'
-								})
+							// uni.showToast({
+							// 	title: "服务器异常，请稍后再试！",
+							// 	icon:'none'
+							// 	})
 								
 						} else {
 							uni.setStorageSync('token', res.header.token);

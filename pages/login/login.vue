@@ -80,7 +80,6 @@
 		},
 		methods: {
 			queryDeptList() {
-				uni.setStorageSync('token', result.map.token);
 				const params = {
 					"url": this.ssdapi.queryDept.url,
 					"contentType": this.ssdapi.queryDept.contentType,
