@@ -80,6 +80,7 @@
 		},
 		methods: {
 			queryDeptList() {
+				uni.setStorageSync('token', result.map.token);
 				const params = {
 					"url": this.ssdapi.queryDept.url,
 					"contentType": this.ssdapi.queryDept.contentType,
@@ -141,17 +142,17 @@
 					title: '加载中'
 				});
 				// if(this.userCom=='bfhc001'||this.userCom=='BFHC001'||this.userCom=='sevenstar'||this.userCom=='SEVENSTAR'){
-				// 	uni.setStorageSync('baseUrl', 'https://unicorncto.top') 
+				// 	uni.setStorageSync('baseUrl', 'https://unicorncto.top')
 				// }else if (this.userCom=='BFHCZB'||this.userCom=='bfhczb'){
 					// uni.setStorageSync('baseUrl', 'https://ft.unicorncto.top')
 				// }else{
-					
+
 				// 	uni.showToast({
 				// 		title: '公司码错误',
 				// 		duration: 1000,
 				// 		icon: 'error'
 				// 	});
-					
+
 				// 	return
 				// }
 

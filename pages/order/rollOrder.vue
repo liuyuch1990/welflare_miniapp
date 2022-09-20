@@ -16,7 +16,7 @@
 					   @click-input="show = true" />
 			<van-datetime-picker v-if="show"
 								 :value="currentDate"
-								 type="datetime"
+								 type="datehour"
 							title="选择完整时间"
 					:min-date="minDate"
 					:max-date="maxDate"
